@@ -1,14 +1,14 @@
 {
-  "main.css": "http://localhost:3000/static/css/main.835bc259.chunk.css",
-  "main.js": "http://localhost:3000/static/js/main.2fb5659e.chunk.js",
-  "main.js.map": "http://localhost:3000/static/js/main.2fb5659e.chunk.js.map",
-  "static/js/1.1b152bdc.chunk.js": "http://localhost:3000/static/js/1.1b152bdc.chunk.js",
-  "static/js/1.1b152bdc.chunk.js.map": "http://localhost:3000/static/js/1.1b152bdc.chunk.js.map",
-  "runtime~main.js": "http://localhost:3000/static/js/runtime~main.b2fc261b.js",
-  "runtime~main.js.map": "http://localhost:3000/static/js/runtime~main.b2fc261b.js.map",
-  "static/media/Logo.png": "http://localhost:3000/static/media/Logo.261b1894.png",
-  "static/css/main.835bc259.chunk.css.map": "http://localhost:3000/static/css/main.835bc259.chunk.css.map",
-  "index.html": "http://localhost:3000/index.html",
-  "precache-manifest.a1842e46442decdc7a460de4e247c403.js": "http://localhost:3000/precache-manifest.a1842e46442decdc7a460de4e247c403.js",
-  "service-worker.js": "http://localhost:3000/service-worker.js"
+  "main.css": "https://manny-plyable.herokuapp.com/static/css/main.835bc259.chunk.css",
+  "main.js": "https://manny-plyable.herokuapp.com/static/js/main.2fb5659e.chunk.js",
+  "main.js.map": "https://manny-plyable.herokuapp.com/static/js/main.2fb5659e.chunk.js.map",
+  "static/js/1.1b152bdc.chunk.js": "https://manny-plyable.herokuapp.com/static/js/1.1b152bdc.chunk.js",
+  "static/js/1.1b152bdc.chunk.js.map": "https://manny-plyable.herokuapp.com/static/js/1.1b152bdc.chunk.js.map",
+  "runtime~main.js": "https://manny-plyable.herokuapp.com/static/js/runtime~main.6a1a83b6.js",
+  "runtime~main.js.map": "https://manny-plyable.herokuapp.com/static/js/runtime~main.6a1a83b6.js.map",
+  "static/media/Logo.png": "https://manny-plyable.herokuapp.com/static/media/Logo.261b1894.png",
+  "static/css/main.835bc259.chunk.css.map": "https://manny-plyable.herokuapp.com/static/css/main.835bc259.chunk.css.map",
+  "index.html": "https://manny-plyable.herokuapp.com/index.html",
+  "precache-manifest.e0449b319f194357dc89899884980294.js": "https://manny-plyable.herokuapp.com/precache-manifest.e0449b319f194357dc89899884980294.js",
+  "service-worker.js": "https://manny-plyable.herokuapp.com/service-worker.js"
 }
