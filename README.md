@@ -77,3 +77,21 @@ npm run build
 
 ## Authors
 This project was created in 7 days by 4 junior developers. They are, Mansang Jo /MannyJo, Daniel Ridley /duallynoted, Hailee Miu /haileemiu and Elias Friedman /abubanggheed.
+
+
+## Heroku Login Info
+### Admin
+```
+ID : Admin@plyable.io
+PW : 123456
+```
+### Manager
+```
+ID : Manny.Jo@flexsystems.com
+PW : 123456
+```
+### User
+```
+ID : Hailee.Miu@flexsystems.com
+PW : 123456
+```
