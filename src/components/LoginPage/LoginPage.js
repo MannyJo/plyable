@@ -71,6 +71,13 @@ const styles = () => ({
   buttonDiv: {
     margin: '15px',
   },
+  loginButton: {
+    width: '100%',
+  },
+  infoButton: {
+    width: '30%',
+    margin: '5px',
+  }
 });
 
 class LoginPage extends Component {
@@ -99,6 +106,25 @@ class LoginPage extends Component {
     this.setState({
       [propertyName]: event.target.value,
     });
+  }
+
+  fillLoginFields = userType => event => {
+    event.preventDefault();
+
+    let email = '';
+
+    if(userType === 'admin') {
+      email = 'Admin@plyable.io'
+    } else if(userType === 'manager') {
+      email = 'Manny.Jo@flexsystems.com'
+    } else {
+      email = 'Hailee.Miu@flexsystems.com'
+    }
+    
+    this.setState({
+      ...this.state,
+      email: email
+    })
   }
 
   render() {
@@ -139,7 +165,36 @@ class LoginPage extends Component {
                   />
                 </div>
                 <div className={classes.buttonDiv}>
-                  <Button onClick={this.login} variant="contained" type="submit" color="primary">Log In</Button>
+                  <Button 
+                    className={classes.infoButton}
+                    onClick={this.fillLoginFields('admin')} 
+                    variant="contained" 
+                    type="submit" 
+                    color="secondary"
+                  >Admin</Button>
+                  <Button 
+                    className={classes.infoButton}
+                    onClick={this.fillLoginFields('manager')} 
+                    variant="contained" 
+                    type="submit" 
+                    color="secondary"
+                  >Manager</Button>
+                  <Button 
+                    className={classes.infoButton}
+                    onClick={this.fillLoginFields('user')} 
+                    variant="contained" 
+                    type="submit" 
+                    color="secondary"
+                  >User</Button>
+                </div>
+                <div className={classes.buttonDiv}>
+                  <Button 
+                    className={classes.loginButton}
+                    onClick={this.login} 
+                    variant="contained" 
+                    type="submit" 
+                    color="primary"
+                  >Log In</Button>
                 </div>
               </div>
             </form>
