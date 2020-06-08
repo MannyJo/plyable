@@ -75,8 +75,8 @@ const styles = () => ({
 
 class LoginPage extends Component {
   state = {
-    email: '',
-    password: '',
+    email: 'Admin@plyable.io',
+    password: '123456',
   }
 
   login = event => {
