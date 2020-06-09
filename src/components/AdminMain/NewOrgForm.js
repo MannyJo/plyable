@@ -17,18 +17,46 @@ const styles = theme => ({
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },
+    margin:  {
+        margin: 10
+    },
+    title: {
+        textAlign: 'center',
+        width: '100%',
+        color: '#ffffff',
+        fontSize: '20px',
+        padding: '5px',
+    },
+    form: {
+        maxWidth: '500px',
+        margin: 'auto',
+        backgroundColor: '#00868b',
+        borderRadius: '10px',
+        padding: '1px',
+    },
     container: {
+        backgroundColor: '#ffffff',
+        borderRadius: '10px',
         display: 'flex',
         flexWrap: 'wrap',
+        padding: '10px',
     },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 'flex',
     },
-    margin:  {
-        margin: 10
-    }
+    submitButton: {
+        
+    },
+    label: {
+        textTransform: 'capitalize',
+        fontSize: 14,
+        color: '#ffffff',
+    },
+    buttonDiv: {
+        textAlign: 'center',
+    },
 });
 
 class NewOrgForm extends Component {
@@ -36,8 +64,9 @@ class NewOrgForm extends Component {
         newOrganization: {
             name: '',
         }
-    };//this is the local state for creating new organizations
+    }
 
+    //currying function that can handle many inputs--currently only handling newOrganization.name
     handleChangeFor = propertyName => event => {
         this.setState({
             newOrganization: {
@@ -45,26 +74,28 @@ class NewOrgForm extends Component {
                 [propertyName]: event.target.value
             }
         });
-    };//currying function that can handle many inputs--currently only handling newOrganization.name
+    }
 
     handleOrgSubmit = (event) => {
         event.preventDefault();
         this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION', payload: this.state.newOrganization }) //upon submit, action sends info to newOrgSaga
+        //spread operator holds former state, setState alters state to make a new organization
         this.setState({
             ...this.state.newOrganization,
             newOrganization: {
                 name: '',
             }
-        });//spread operator holds former state, setState alters state to make a new organization
-        this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
-    };//end handleOrgSubmit
+        });
+        //this will dispatch an action type which triggers a SnackBar alert
+        this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' });
+    }
 
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.margin}>
-                <h1>Add a New Organization</h1>
-                <form className="form">
+                <form className={classes.form}>
+                    <div className={classes.title}>Add a New Organization</div>
                     <FormControl className={classes.container} noValidate autoComplete="off">
                         <TextField
                             id="standard-name"
@@ -74,8 +105,18 @@ class NewOrgForm extends Component {
                             onChange={this.handleChangeFor('name')}
                             margin="normal"
                         />
-                        <Button onClick={this.handleOrgSubmit} type="submit" value='Submit' color="primary">Submit</Button>
                     </FormControl>
+                    <div className={classes.buttonDiv}>
+                        <Button 
+                            classes={{
+                                label: classes.label,
+                            }}
+                            onClick={this.handleOrgSubmit} 
+                            type="submit" 
+                            value="Submit" 
+                            color="primary"
+                        >Submit</Button>
+                    </div>
                 </form>
             </div >
         );
