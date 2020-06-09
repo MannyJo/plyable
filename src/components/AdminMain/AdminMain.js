@@ -13,17 +13,33 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Edit from '@material-ui/icons/Edit';
+import Remove from '@material-ui/icons/Remove';
+import Send from '@material-ui/icons/Send';
+import Add from '@material-ui/icons/Add';
 /*----Material UI---*/
 
 const CustomTableCell = withStyles(theme => ({
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: '#00868b',
         color: theme.palette.common.white,
         fontSize: 24,
+        textAlign: 'center',
+        padding: 10,
+        '&:last-child' : {
+            padding: 10
+        },
+        border: 'none',
     },
     body: {
         fontSize: 20,
-        textTransform: 'upperCase'
+        textTransform: 'upperCase',
+        textAlign: 'center',
+        padding: 10,
+        '&:last-child' : {
+            padding: 10
+        },
+        border: 'none',
     },
 }))(TableCell);
 
@@ -34,22 +50,30 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     buttons: {
-        background: 'linear-gradient(45deg, #00868b 30%, #aaa 90%)',
-        borderRadius: 2,
+        background: '#00868b',
+        borderRadius: 15,
         border: 0,
         color: 'white',
-        height: 24,
+        height: 30,
         padding: '0 10px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        margin: '5px',
+        '&:hover': {
+            background: 'rgba(0, 133, 139, .7)',
+        }
     },
-    deactivate: {
-        background: 'linear-gradient(45deg, #192343 30%, red  90%)',
-        borderRadius: 2,
+    secButtons: {
+        background: '#EC407A',
+        borderRadius: 15,
         border: 0,
         color: 'white',
-        height: 24,
+        height: 30,
         padding: '0 10px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        margin: '5px',
+        '&:hover': {
+            background: 'rgba(236, 65, 121, .7)',
+        }
     },
     label: {
         textTransform: 'capitalize',
@@ -65,7 +89,18 @@ const styles = theme => ({
     },
     margin: {
         margin: 15
-    }
+    },
+    adminWelcome: {
+        width: '100%',
+        textAlign: 'center',
+    },
+    addButtonDiv: {
+        float: 'right',
+        lineHeight: '30px',
+    },
+    normalCell: {
+        fontSize: '15px',
+    },
 });
 
 
@@ -80,37 +115,41 @@ class AdminMain extends Component {
         orgName: '',
         page: 0,
         rowsPerPage: 6,
-    };
+    }
 
+    //this will fetch all organizations from the database upon page load
     componentDidMount() {
         if (this.props.reduxState.user.security_level !== securityLevel.ADMIN_ROLE) {
             this.props.history.push('/main');
         } else {
             this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
         }
-    };//this will fetch all organizations from the database upon page load
+    }
 
+    //this button will take the admin to a form to add a new organization
     handleAddNewOrganizationClick = () => {
         this.props.history.push('/adminmain/createneworganization');
-    }; //this button will take the admin to a form to add a new organization
+    }
 
+    //this button will take the admin to an organization-specific admin page
     handleViewOrgClick = (id) => {
         this.props.history.push(`/adminmain/organization/${id}`);
-    }//this button will take the admin to an organization-specific admin page
+    }
 
     //this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
     handleDeactivateClick = (org_id) => {
-        this.setState({ deactivateDialog: true, org_id: org_id }) // open dialog box
+        this.setState({ deactivateDialog: true, org_id: org_id }); // open dialog box
     }
 
     handleDeactivateConfirm = (org_id) => {
         this.props.dispatch({ type: 'DEACTIVATE_ORGANIZATION', payload: org_id });
-        this.setState({ ...this.state, deactivateDialog: false })
-        this.props.dispatch({ type: 'CONFIRM_DEACTIVATE_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
+        this.setState({ ...this.state, deactivateDialog: false });
+        //this will dispatch an action type which triggers a SnackBar alert
+        this.props.dispatch({ type: 'CONFIRM_DEACTIVATE_SNACKBAR' }); 
     }
 
     handleCancelDeactivate = () => {
-        this.setState({ ...this.state, deactivateDialog: false })
+        this.setState({ ...this.state, deactivateDialog: false });
     }
 
     // show edit dialog and store organization's name in state
@@ -166,6 +205,7 @@ class AdminMain extends Component {
         this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { ...this.state, emailList: splitList } });
         this.handleCancelAddManager();
     }
+
     //currying for adding emails
     handleChange = event => {
         this.setState({
@@ -173,20 +213,22 @@ class AdminMain extends Component {
             emailList: event.target.value,
         });
     }
+
     //pagination
     handleChangeRowsPerPage = event => {
         this.setState({
             ...this.state,
             rowsPerPage: event.target.value
         });
-    };
+    }
+
     //pagination
     handleChangePage = (event, page) => {
         this.setState({
             ...this.state,
             page,
         });
-    };
+    }
 
     addManagerData = () => {
         this.setState({ emailList: "ridleydan31@gmail.com" });
@@ -198,16 +240,23 @@ class AdminMain extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.margin}>
-                <h1>Welcome, {this.props.reduxState.user.email}!</h1>
+                <div className={classes.addButtonDiv}>
+                    <Button color="primary" onClick={this.handleAddNewOrganizationClick}
+                        classes={{
+                            root: classes.buttons,
+                            label: classes.label,
+                        }}
+                    >
+                        <Add />
+                    </Button>
+                </div>
+                <h1 className={classes.adminWelcome}>Welcome, {this.props.reduxState.user.email}!</h1>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>Organization Name</CustomTableCell>
-                                <CustomTableCell>Survey Results Page</CustomTableCell>
                                 <CustomTableCell>Update Information</CustomTableCell>
-                                <CustomTableCell>Cycle Status</CustomTableCell>
-                                <CustomTableCell>Add Manager</CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -215,18 +264,15 @@ class AdminMain extends Component {
                             on the DOM in a table*/}
                             {this.props.reduxState.adminMainReducer.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map(organization => (
-                                    <TableRow key={organization.id} organization={organization}>
-                                        <CustomTableCell>{organization.name}</CustomTableCell>
-                                        <CustomTableCell>
-                                            <Button
-                                                classes={{
-                                                    root: classes.buttons,
-                                                    label: classes.label,
-                                                }}
-                                                variant="contained"
-                                                onClick={() => this.handleViewOrgClick(organization.id)}>
-                                                View
-                                            </Button>
+                                    <TableRow hover key={organization.id} organization={organization}>
+                                        <CustomTableCell 
+                                            onClick={() => this.handleViewOrgClick(organization.id)}
+                                        >
+                                            {
+                                                organization.collecting_data ?
+                                                organization.name
+                                                : organization.name + '(deactivated)'
+                                            }
                                         </CustomTableCell>
                                         <CustomTableCell>
                                             <Button
@@ -236,26 +282,51 @@ class AdminMain extends Component {
                                                 }}
                                                 variant="contained"
                                                 onClick={this.handleEditOrgClick(organization)}>
-                                                Edit
+                                                <Edit />
                                             </Button>
-                                        </CustomTableCell>
-                                        {/* Ternary Function to render button or text */}
-                                        <CustomTableCell>
                                             {
                                                 organization.collecting_data ?
+                                                <>
                                                     <Button
                                                         classes={{
-                                                            root: classes.deactivate,
+                                                            root: classes.buttons,
+                                                            label: classes.label,
+                                                        }}
+                                                        variant="contained"
+                                                        onClick={this.handleAddManagers(organization.id)}
+                                                    >
+                                                        <Send />&nbsp;Add Manager
+                                                    </Button>
+                                                    <Button
+                                                        classes={{
+                                                            root: classes.secButtons,
+                                                            label: classes.label,
                                                         }}
                                                         variant="contained"
                                                         onClick={() => this.handleDeactivateClick(organization.id)}>
-                                                        Deactivate
-                                                    </Button> :
-                                                    <p>Deactivated</p>
+                                                        <Remove />
+                                                    </Button>
+                                                </> :
+                                                <></>
                                             }
                                         </CustomTableCell>
+                                        {/* Ternary Function to render button or text */}
+                                        {/* <CustomTableCell>
+                                            {
+                                                organization.collecting_data ?
+                                                <Button
+                                                    classes={{
+                                                        root: classes.deactivate,
+                                                    }}
+                                                    variant="contained"
+                                                    onClick={() => this.handleDeactivateClick(organization.id)}>
+                                                    <Remove />&nbsp;Deactivate
+                                                </Button> :
+                                                <div className={classes.normalCell}>Deactivated</div>
+                                            }
+                                        </CustomTableCell> */}
                                         {/* Ternary Function to disable   */}
-                                        <CustomTableCell>
+                                        {/* <CustomTableCell>
                                             <Button
                                                 classes={{
                                                     root: classes.buttons,
@@ -265,9 +336,9 @@ class AdminMain extends Component {
                                                 onClick={this.handleAddManagers(organization.id)}
                                                 disabled={!organization.collecting_data}
                                             >
-                                                Send Invite
-                                    </Button>
-                                        </CustomTableCell>
+                                                <Send />&nbsp;Send Invite
+                                            </Button>
+                                        </CustomTableCell> */}
                                     </TableRow>
 
                                 ))}
@@ -294,11 +365,6 @@ class AdminMain extends Component {
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-                <Button color="primary" onClick={this.handleAddNewOrganizationClick}
-                    classes={{
-                        root: classes.buttons,
-                        label: classes.label,
-                    }}>Add New Organization</Button>
 
                 {/* Dialog box for editing organization */}
                 <Dialog open={this.state.editDialog}>
