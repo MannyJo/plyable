@@ -34,11 +34,12 @@ const styles = () => ({
     },
     selectBox: {
         width: '80%',
-        height: '50px',
+        height: '40px',
         fontSize: '20px',
         backgroundColor: '#00868bbb',
         color: 'white',
         border: '1px solid #00868b',
+        borderRadius: 20,
         outline: 'none',
         textAlign: 'center',
         textAlignLast: 'center',
@@ -48,13 +49,16 @@ const styles = () => ({
         textAlign: 'right',
     },
     buttons: {
-        background: 'linear-gradient(45deg, #4680fb 40%, #aaa 90%)',
-        borderRadius: 5,
-        border: 0,
+        borderRadius: 20,
+        border: '1px solid #ffffff',
         color: 'white',
         height: 24,
-        padding: '0 10px',
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
+        padding: '15px',
+        margin: '5px',
+        '&:hover': {
+            backgroundColor: '#ffffff',
+            color: '#00868b',
+        }
     },
     margin: {
         margin: 10
@@ -206,26 +210,19 @@ class AdminOrgMain extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.margin}>
-                <div>
-                    <Button
-                        onClick={this.goBack}
-                        classes={{
-                            root: classes.buttons,
-                        }}
-                    >Back</Button>
-                </div>
                 <CompletedFeedback />
                 <div className={classes.cardFrame}>
                     <div className={classes.title}>Behavior Assessment Averages</div>
                     <div className={classes.subBackground}>
                         <canvas id="adminAverageChart"></canvas>
-                        <div className={classes.downloadButtonDiv}>
-                            <Button
-                                onClick={this.downloadCSV('average')}
-                                classes={{
-                                    root: classes.buttons,
-                                }}>Download CSV</Button>
-                        </div>
+                    </div>
+                    <div className={classes.downloadButtonDiv}>
+                        <Button
+                            onClick={this.downloadCSV('average')}
+                            classes={{
+                                root: classes.buttons,
+                            }}
+                        >Download CSV</Button>
                     </div>
                 </div>
                 <div className={classes.cardFrame}>
@@ -235,13 +232,14 @@ class AdminOrgMain extends Component {
                             {this.props.behaviorData.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
                         </select>
                         <canvas id="adminSpecificChart"></canvas>
-                        <div className={classes.downloadButtonDiv}>
-                            <Button
-                                onClick={this.downloadCSV('behaviors')}
-                                classes={{
-                                    root: classes.buttons,
-                                }}>Download CSV</Button>
-                        </div>
+                    </div>
+                    <div className={classes.downloadButtonDiv}>
+                        <Button
+                            onClick={this.downloadCSV('behaviors')}
+                            classes={{
+                                root: classes.buttons,
+                            }}
+                        >Download CSV</Button>
                     </div>
                 </div>
                 <Dialog open={this.state.dialogOpen}>
