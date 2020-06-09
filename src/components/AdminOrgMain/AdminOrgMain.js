@@ -17,7 +17,7 @@ const styles = () => ({
         border: '1px solid #00868b',
         borderRadius: '20px',
         margin: '15px auto',
-        width: '70vw',
+        maxWidth: '750px',
         backgroundColor: '#00868b',
     },
     title: {
@@ -211,9 +211,8 @@ class AdminOrgMain extends Component {
                         onClick={this.goBack}
                         classes={{
                             root: classes.buttons,
-                        }}>
-                        Back
-                    </Button>
+                        }}
+                    >Back</Button>
                 </div>
                 <CompletedFeedback />
                 <div className={classes.cardFrame}>
