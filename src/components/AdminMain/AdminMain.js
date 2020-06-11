@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
 import EditDialog from './EditDialog';
+import DeactivateDialog from './DeactivateDialog';
 /*----Material UI---*/
 import {
     Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
@@ -348,11 +349,12 @@ class AdminMain extends Component {
                 />
 
                 {/* Dialog box for deactivating */}
-                <Dialog open={this.state.deactivateDialog}>
-                    <DialogTitle>Are you sure you want to deactivate this company?</DialogTitle>
-                    <Button color="primary" onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</Button>
-                    <Button color="secondary" onClick={this.handleCancelDeactivate}>No</Button>
-                </Dialog>
+                <DeactivateDialog
+                    deactivateDialog={this.state.deactivateDialog}
+                    handleDeactivateConfirm={this.handleDeactivateConfirm}
+                    org_id={this.state.org_id}
+                    handleCancelDeactivate={this.handleCancelDeactivate}
+                />
 
                 {/* Dialog box for inviting managers */}
                 <Dialog open={this.state.addManager}>
