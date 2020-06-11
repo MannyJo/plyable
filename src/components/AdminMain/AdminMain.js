@@ -4,17 +4,14 @@ import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
 import EditDialog from './EditDialog';
 import DeactivateDialog from './DeactivateDialog';
+import AddManagerDialog from './AddManagerDialog';
 /*----Material UI---*/
 import {
     Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
-    Paper, Typography, TextField, withStyles
+    Paper, withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Edit from '@material-ui/icons/Edit';
 import Remove from '@material-ui/icons/Remove';
 import Send from '@material-ui/icons/Send';
@@ -204,9 +201,11 @@ class AdminMain extends Component {
     }
 
     sendInvitationEmails = () => {
-        let splitList = this.state.emailList.split('\n'); // creates comma separate array  
-        this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { ...this.state, emailList: splitList } });
-        this.handleCancelAddManager();
+        if(this.state.emailList !== '') {
+            let splitList = this.state.emailList.split('\n'); // creates comma separate array  
+            this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { ...this.state, emailList: splitList } });
+            this.handleCancelAddManager();
+        }
     }
 
     //currying for adding emails
@@ -231,10 +230,6 @@ class AdminMain extends Component {
             ...this.state,
             page,
         });
-    }
-
-    addManagerData = () => {
-        this.setState({ emailList: "ridleydan31@gmail.com" });
     }
 
     render() {
@@ -357,29 +352,13 @@ class AdminMain extends Component {
                 />
 
                 {/* Dialog box for inviting managers */}
-                <Dialog open={this.state.addManager}>
-                    <DialogTitle onClick={this.addManagerData}>Add Managers</DialogTitle>
-                    <DialogContent>
-                        <Typography>1 email per line</Typography>
-                        {/* Large Input Box */}
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="No Commas"
-                            multiline
-                            rows="4"
-                            placeholder='Email Addresses'
-                            className={classes.textField}
-                            value={this.state.emailList}
-                            onChange={this.handleChange}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color="primary" onClick={this.sendInvitationEmails}>Send Invitations</Button>
-                        <Button color="secondary" onClick={this.handleCancelAddManager}>Cancel</Button>
-                    </DialogActions>
-                </Dialog>
+                <AddManagerDialog
+                    addManager={this.state.addManager}
+                    emailList={this.state.emailList}
+                    handleChange={this.handleChange}
+                    sendInvitationEmails={this.sendInvitationEmails}
+                    handleCancelAddManager={this.handleCancelAddManager}
+                />
             </div >
         );
     }

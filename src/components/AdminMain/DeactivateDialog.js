@@ -1,10 +1,9 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/core';
+import { 
+    withStyles, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography
+} from '@material-ui/core';
 
-const styles = theme => ({
+const styles = () => ({
     title: {
         textAlign: 'center',
         backgroundColor: '#00868b',
@@ -12,6 +11,9 @@ const styles = theme => ({
     },
     titleText: {
         color: '#ffffff',
+    },
+    typography: {
+        paddingTop: '15px',
     }
 })
 
@@ -20,10 +22,15 @@ const DeactivateDialog = props => {
     return (
         <Dialog open={props.deactivateDialog}>
             <DialogTitle className={classes.title}>
-                <span className={classes.titleText}>Are you sure you want to deactivate this company?</span>
+                <span className={classes.titleText}>Deactivate</span>
             </DialogTitle>
-            <Button color="primary" onClick={() => props.handleDeactivateConfirm(props.org_id)}>Yes</Button>
-            <Button color="secondary" onClick={props.handleCancelDeactivate}>No</Button>
+            <DialogContent>
+                <Typography variant="h6" className={classes.typography}>Are you sure you want to deactivate this company?</Typography>
+            </DialogContent>
+            <DialogActions>
+                <Button color="primary" onClick={() => props.handleDeactivateConfirm(props.org_id)}>Yes</Button>
+                <Button color="secondary" onClick={props.handleCancelDeactivate}>No</Button>
+            </DialogActions>
         </Dialog>
     )
 }
