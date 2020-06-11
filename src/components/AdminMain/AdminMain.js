@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
+import EditDialog from './EditDialog';
 /*----Material UI---*/
 import {
     Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
@@ -182,6 +183,7 @@ class AdminMain extends Component {
             }
         });
     }
+
     //this is the same code for adding employees
     handleAddManagers = id => () => {
         this.setState({
@@ -310,37 +312,7 @@ class AdminMain extends Component {
                                                 <></>
                                             }
                                         </CustomTableCell>
-                                        {/* Ternary Function to render button or text */}
-                                        {/* <CustomTableCell>
-                                            {
-                                                organization.collecting_data ?
-                                                <Button
-                                                    classes={{
-                                                        root: classes.deactivate,
-                                                    }}
-                                                    variant="contained"
-                                                    onClick={() => this.handleDeactivateClick(organization.id)}>
-                                                    <Remove />&nbsp;Deactivate
-                                                </Button> :
-                                                <div className={classes.normalCell}>Deactivated</div>
-                                            }
-                                        </CustomTableCell> */}
-                                        {/* Ternary Function to disable   */}
-                                        {/* <CustomTableCell>
-                                            <Button
-                                                classes={{
-                                                    root: classes.buttons,
-                                                    label: classes.label,
-                                                }}
-                                                variant="contained"
-                                                onClick={this.handleAddManagers(organization.id)}
-                                                disabled={!organization.collecting_data}
-                                            >
-                                                <Send />&nbsp;Send Invite
-                                            </Button>
-                                        </CustomTableCell> */}
                                     </TableRow>
-
                                 ))}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 49 * emptyRows }}>
@@ -365,26 +337,15 @@ class AdminMain extends Component {
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-
-                {/* Dialog box for editing organization */}
-                <Dialog open={this.state.editDialog}>
-                    <DialogTitle>Edit Organization</DialogTitle>
-                    <DialogContent>
-
-                        <TextField
-                            id="orgName"
-                            label="Name"
-                            className={classes.textField}
-                            value={this.state.orgName}
-                            onChange={this.handleChangeOrgName}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                    </DialogContent>
-                    <br />
-                    <Button color="primary" onClick={this.handleUpdateOrgClick}>Update</Button>
-                    <Button color="secondary" onClick={this.handleEditCancelClick}>Cancel</Button>
-                </Dialog>
+                
+                <EditDialog
+                    editDialog={this.state.editDialog}
+                    orgName={this.state.orgName}
+                    org_id={this.state.org_id}
+                    handleChangeOrgName={this.handleChangeOrgName}
+                    handleEditCancelClick={this.handleEditCancelClick}
+                    handleUpdateOrgClick={this.handleUpdateOrgClick}
+                />
 
                 {/* Dialog box for deactivating */}
                 <Dialog open={this.state.deactivateDialog}>
@@ -431,7 +392,6 @@ const mapStateToProps = reduxState => ({
 });
 
 const adminMainRouter = withRouter(AdminMain);
-
 const adminMainRouterStyles = connect(mapStateToProps)(adminMainRouter);
 
 export default withStyles(styles)(adminMainRouterStyles);
